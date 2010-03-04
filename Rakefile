@@ -27,15 +27,22 @@ begin
 
   Thank you for installing #{gem.summary}
 
-  The 'a' in #{gem.version} means this is alpha software.
-  If you are looking for a supported production release,
-  please "gem install rspec" (without --pre).
+  This is beta software. If you are looking
+  for a supported production release, please
+  "gem install rspec" (without --pre).
   
 #{"*"*50}
 EOM
   end
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
+end
+
+namespace :gem do
+  desc "push to gemcutter"
+  task :push => :build do
+    system "gem push pkg/rspec-#{Rspec::Version::STRING}.gem"
+  end
 end
 
 task :clobber do
